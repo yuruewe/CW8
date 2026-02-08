@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Be My Valentine 💖</title>
+  <title>hehehe</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #ffe6eb;
+      background: #7b5cff;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -58,9 +58,9 @@
 
     <!-- STEP 1 -->
     <div id="step1">
-      <h1>Will you be my Valentine? 💘</h1>
+      <h1>will you be my valentine</h1>
       <button class="yes" onclick="goToStep2()">Yes 💖</button>
-      <button class="no" onclick="alert('Okay 😢 but I still like you a lot!')">No</button>
+      <button class="no" onclick="alert('eh')">No</button>
     </div>
 
     <!-- STEP 2 -->
@@ -68,7 +68,7 @@
       <h2>Our Valentine Date 💕</h2>
       <input id="date" type="date" />
       <input id="time" type="time" />
-      <input id="place" type="text" placeholder="Where are we going?" />
+      
       <input id="outfit" type="text" placeholder="Dress code / outfit" />
       <textarea id="note" placeholder="Anything you want to tell me 💌"></textarea>
       <button class="yes" onclick="goToStep3()">Confirm 💘</button>
@@ -76,7 +76,7 @@
 
     <!-- STEP 3 -->
     <div id="step3" class="hidden">
-      <h2>Valentine Receipt 💞</h2>
+      <h2>Valentine Receipt</h2>
       <div class="receipt" id="receipt"></div>
       <p style="text-align:center;">Screenshot this 📸</p>
     </div>
@@ -100,12 +100,12 @@
       document.getElementById('step3').classList.remove('hidden');
 
       document.getElementById('receipt').innerHTML = `
-        <strong>💖 Valentine Date Confirmed 💖</strong><br><br>
+        <strong>Valentine Date Confirmed</strong><br><br>
         📅 Date: ${date}<br>
         ⏰ Time: ${time}<br>
         📍 Place: ${place}<br>
         👗 Outfit: ${outfit}<br>
-        💌 Note: ${note || 'None'}
+        💌 Note: ${note || 'None'}<br><br>send it to https://web.facebook.com/euro.paloy
       `;
     }
   </script>

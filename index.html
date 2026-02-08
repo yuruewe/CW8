@@ -84,16 +84,26 @@
   </div>
 
   <script>
-    function goToStep2() {
-      document.getElementById('step1').classList.add('hidden');
-      document.getElementById('step2').classList.remove('hidden');
+  function goToStep2() {
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  }
+
+  function goToStep3() {
+    const dateInput = document.getElementById('date');
+    const timeInput = document.getElementById('time');
+    const outfitInput = document.getElementById('outfit');
+    const noteInput = document.getElementById('note');
+
+    if (!dateInput || !timeInput || !outfitInput || !noteInput) {
+      alert('something is missing in the form');
+      return;
     }
 
-    function goToStep3() {
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    const outfit = document.getElementById('outfit').value;
-    const note = document.getElementById('note').value;
+    const date = dateInput.value;
+    const time = timeInput.value;
+    const outfit = outfitInput.value;
+    const note = noteInput.value;
 
     document.getElementById('step2').classList.add('hidden');
     document.getElementById('step3').classList.remove('hidden');
@@ -108,5 +118,6 @@
     `;
   }
 </script>
+
 </body>
 </html>

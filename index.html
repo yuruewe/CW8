@@ -90,24 +90,23 @@
     }
 
     function goToStep3() {
-      const date = document.getElementById('date').value;
-      const time = document.getElementById('time').value;
-      const place = document.getElementById('place').value;
-      const outfit = document.getElementById('outfit').value;
-      const note = document.getElementById('note').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    const outfit = document.getElementById('outfit').value;
+    const note = document.getElementById('note').value;
 
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('step3').classList.remove('hidden');
+    document.getElementById('step2').classList.add('hidden');
+    document.getElementById('step3').classList.remove('hidden');
 
-      document.getElementById('receipt').innerHTML = `
-        <strong>Valentine Date Confirmed</strong><br><br>
-        📅 Date: ${date}<br>
-        ⏰ Time: ${time}<br>
-        📍 Place: ${place}<br>
-        👗 Outfit: ${outfit}<br>
-        💌 Note: ${note || 'None'}<br><br>send it to https://web.facebook.com/euro.paloy
-      `;
-    }
-  </script>
+    document.getElementById('receipt').innerHTML = `
+      <strong>Valentine Date Confirmed</strong><br><br>
+      📅 Date: ${date}<br>
+      ⏰ Time: ${time}<br>
+      👗 Outfit: ${outfit}<br>
+      💌 Note: ${note || 'None'}<br><br>
+      send it to https://web.facebook.com/euro.paloy
+    `;
+  }
+</script>
 </body>
 </html>

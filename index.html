@@ -1,50 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>hehehe</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>hehehe</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: url("assets/background.png") center / cover no-repeat;
-      min-height: 100vh;
-      margin: 0;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: url("assets/background.png") center / cover no-repeat;
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(177, 136, 207, 0.4);
-      z-index: -1;
-    }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(177,136,207,0.4);
+  z-index: -1;
+}
 
-    /* Nailong background character */
-    .nailong-bg {
-      position: fixed;
-      left: 24px;
-      bottom: 24px;
-      width: 240px; /* BIGGER */
-      z-index: 1;
-      transition: opacity 0.3s;
-    }
+/* Nailong */
+.nailong-bg {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  width: 260px;
+  z-index: 1;
+}
 
-    .hidden {
-      display: none;
-    }
-
-    /* Music button - centered top */
-    .music-btn {
+/* Music */
+.music-btn {
   position: fixed;
   top: 16px;
   left: 50%;
@@ -53,198 +45,171 @@
   height: 40px;
   border-radius: 50%;
   border: none;
-  cursor: pointer;
   background: rgba(255,255,255,0.9);
   font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
   z-index: 2;
 }
 
+/* Card */
+.card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  z-index: 2;
+  position: relative;
+}
 
-    .card {
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      z-index: 2;
-    }
+.hidden { display: none; }
 
-    h1, h2 {
-      text-align: center;
-      margin-bottom: 16px;
-    }
+h1, h2 { text-align: center; }
 
-    button {
-      padding: 12px 16px;
-      margin: 8px 0;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+button {
+  padding: 12px;
+  width: 100%;
+  margin: 8px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .yes {
-      background: #ff4d6d;
-      color: white;
-    }
+.yes { background: #ff4d6d; color: white; }
+.no  { background: #ccc; position: relative; }
 
-    .no {
-      background: #ccc;
-    }
+/* Form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
 
-    /* Inputs properly centered */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
-    input, textarea {
-      width: 100%;
-      max-width: 100%;
-      padding: 10px;
-      margin: 6px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
+textarea { resize: none; height: 80px; }
 
-    textarea {
-      resize: none;
-      height: 80px;
-    }
+/* Receipt */
+.receipt {
+  background: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  border: 1px dashed #999;
+}
 
-    .receipt {
-      background: #f7f7f7;
-      padding: 16px;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-  </style>
+.receipt .center { text-align: center; }
+.receipt hr {
+  border: none;
+  border-top: 1px dashed #aaa;
+  margin: 10px 0;
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Nailong -->
-  <img
-    id="nailong"
-    class="nailong-bg"
-    src="assets/nailong-happy.png"
-    alt="nailong"
-  />
+<img id="nailong" class="nailong-bg" src="assets/nailong-happy.png" />
 
-  <!-- Music button -->
-  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
-  ▶
-</button>
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">▶</button>
 
-  <!-- Main card -->
-  <div class="card">
+<div class="card">
 
-    <!-- STEP 1 -->
-    <div id="step1">
-      <h1>Will you be my valentine? ♥️</h1>
-      <button class="yes" onclick="handleYes()">yes</button>
-      <button class="no" onclick="handleNo()">no</button>
-    </div>
-
-    <!-- STEP 2 -->
-    <div id="step2" class="hidden">
-      <h2>Valentine Date</h2>
-
-      <div class="form-group">
-        <input id="date" type="date" />
-        <input id="time" type="time" />
-        <input id="outfit" type="text" placeholder="Dress code / outfit" />
-        <textarea id="note" placeholder="Anything you want to tell me? Also, do you want to celebrate 14 and 22 ng sabay? Please specify"></textarea>
-      </div>
-
-      <button class="yes" onclick="goToStep3()">Confirm</button>
-    </div>
-
-    <!-- STEP 3 -->
-    <div id="step3" class="hidden">
-      <h2>Valentine Receipt</h2>
-      <div class="receipt" id="receipt"></div>
-      <p style="text-align:center;">Screenshot this 📸</p>
-    </div>
-
+  <!-- STEP 1 -->
+  <div id="step1">
+    <h1>Will you be my valentine? ♥️</h1>
+    <button class="yes" onclick="handleYes()">yes</button>
+    <button class="no" id="noBtn" onclick="handleNo()">no</button>
   </div>
 
-  <!-- AUDIO -->
-  <audio id="bgMusic" loop>
-    <source src="assets/bg-music.mp3" type="audio/mpeg">
-  </audio>
+  <!-- STEP 2 -->
+  <div id="step2" class="hidden">
+    <h2>Valentine Date</h2>
+    <div class="form-group">
+      <input id="date" type="date">
+      <input id="time" type="time">
+      <input id="outfit" placeholder="Dress code / outfit">
+      <textarea id="note" placeholder="Anything you want to tell me?"></textarea>
+    </div>
+    <button class="yes" onclick="goToStep3()">Confirm</button>
+  </div>
 
-  <audio id="bangSound">
-    <source src="assets/bang.mp3" type="audio/mpeg">
-  </audio>
+  <!-- STEP 3 -->
+  <div id="step3" class="hidden">
+    <h2>Receipt</h2>
+    <div class="receipt" id="receipt"></div>
+    <p style="text-align:center;">Screenshot this 📸</p>
+  </div>
 
-  <script>
-    let musicPlaying = false;
+</div>
 
-    function toggleMusic() {
-  const music = document.getElementById("bgMusic");
-  const btn = document.getElementById("musicBtn");
+<audio id="bgMusic" loop>
+  <source src="assets/bg-music.mp3">
+</audio>
 
-  if (!musicPlaying) {
-    music.play();
-    musicPlaying = true;
-    btn.textContent = "⏸";
-  } else {
-    music.pause();
-    musicPlaying = false;
-    btn.textContent = "▶";
-  }
+<audio id="bangSound">
+  <source src="assets/bang.mp3">
+</audio>
+
+<script>
+let musicPlaying = false;
+
+function toggleMusic() {
+  const m = bgMusic;
+  musicPlaying ? m.pause() : m.play();
+  musicPlaying = !musicPlaying;
+  musicBtn.textContent = musicPlaying ? "⏸" : "▶";
 }
 
+function handleNo() {
+  bangSound.currentTime = 0;
+  bangSound.play();
 
-    function handleNo() {
-      const nailong = document.getElementById("nailong");
-      const bang = document.getElementById("bangSound");
+  nailong.src = "assets/nailong-sad.png";
 
-      bang.currentTime = 0;
-      bang.play();
+  const btn = document.getElementById("noBtn");
+  const card = document.querySelector(".card");
 
-      nailong.src = "assets/nailong-sad.png";
+  const maxX = card.clientWidth - btn.clientWidth;
+  const maxY = card.clientHeight - btn.clientHeight;
 
-      setTimeout(() => {
-        nailong.src = "assets/nailong-happy.png";
-      }, 1500);
-    }
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * maxX + "px";
+  btn.style.top  = Math.random() * maxY + "px";
 
-    function handleYes() {
-      // ❌ NO autoplay anymore
+  setTimeout(() => nailong.src = "assets/nailong-happy.png", 1200);
+}
 
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("nailong").classList.add("hidden");
-      document.getElementById("step2").classList.remove("hidden");
-    }
+function handleYes() {
+  step1.classList.add("hidden");
+  step2.classList.remove("hidden");
+  nailong.src = "assets/nailong-dance.png";
+}
 
-    function goToStep3() {
-      const date = document.getElementById("date").value;
-      const time = document.getElementById("time").value;
-      const outfit = document.getElementById("outfit").value;
-      const note = document.getElementById("note").value;
+function goToStep3() {
+  step2.classList.add("hidden");
+  step3.classList.remove("hidden");
 
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("step3").classList.remove("hidden");
-
-      document.getElementById("receipt").innerHTML = `
-        <strong>Valentine Date Confirmed</strong><br><br>
-        📅 Date: ${date}<br>
-        ⏰ Time: ${time}<br>
-        👗 Outfit: ${outfit}<br>
-        💌 Note: ${note || "None"}<br><br>
-        send the screenshot to https://web.facebook.com/euro.paloy
-      `;
-    }
-  </script>
+  receipt.innerHTML = `
+    <div class="center"><strong>VALENTINE RECEIPT</strong></div>
+    <hr>
+    Date: ${date.value}<br>
+    Time: ${time.value}<br>
+    Outfit: ${outfit.value}<br>
+    Note: ${note.value || "None"}
+    <hr>
+    <div class="center">Send to<br>https://web.facebook.com/euro.paloy</div>
+  `;
+}
+</script>
 
 </body>
 </html>

@@ -4,27 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>hehehe</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #B188CF;
+      background: url("assets/background.png") center / cover no-repeat;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      position: relative;
     }
+
+    /* purple overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(177, 136, 207, 0.4);
+      z-index: -1;
+    }
+
     .card {
       background: white;
       padding: 24px;
       border-radius: 12px;
       width: 100%;
-      max-width: 420px;
+      max-width: 480px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
+
     h1, h2 {
       text-align: center;
     }
+
     button {
       padding: 12px 16px;
       margin: 8px 0;
@@ -34,8 +48,21 @@
       font-size: 16px;
       cursor: pointer;
     }
-    .yes { background: #ff4d6d; color: white; }
-    .no { background: #ccc; }
+
+    .yes {
+      background: #ff4d6d;
+      color: white;
+    }
+
+    .no {
+      background: #ccc;
+    }
+
+    .music-btn {
+      background: #eee;
+      font-size: 14px;
+    }
+
     input, textarea {
       width: 100%;
       padding: 10px;
@@ -44,23 +71,60 @@
       border: 1px solid #ccc;
       font-size: 14px;
     }
-    .hidden { display: none; }
+
+    .hidden {
+      display: none;
+    }
+
     .receipt {
       background: #f7f7f7;
       padding: 16px;
       border-radius: 8px;
       font-size: 14px;
     }
+
+    /* STEP 1 layout */
+    .step1-layout {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .nailong {
+      width: 120px;
+      flex-shrink: 0;
+      transition: opacity 0.3s;
+    }
   </style>
 </head>
+
 <body>
+
   <div class="card">
 
     <!-- STEP 1 -->
-    <div id="step1">
-      <h1>will you be my valentine</h1>
-      <button class="yes" onclick="goToStep2()">yes</button>
-      <button class="no" onclick="alert('eh')">no</button>
+    <div id="step1" class="step1-layout">
+
+      <!-- Nailong -->
+      <img
+        id="nailong"
+        class="nailong"
+        src="assets/nailong-happy.png"
+        alt="nailong"
+      />
+
+      <!-- Text + buttons -->
+      <div style="flex:1;">
+        <h1>will you be my valentine</h1>
+
+        <button class="yes" onclick="handleYes()">yes</button>
+        <button class="no" onclick="handleNo()">no</button>
+
+        <button class="music-btn" onclick="toggleMusic()">
+          ▶ / ⏸ music
+        </button>
+      </div>
+
     </div>
 
     <!-- STEP 2 -->
@@ -68,7 +132,6 @@
       <h2>valentine date</h2>
       <input id="date" type="date" />
       <input id="time" type="time" />
-      
       <input id="outfit" type="text" placeholder="Dress code / outfit" />
       <textarea id="note" placeholder="Anything you want to tell me 💌"></textarea>
       <button class="yes" onclick="goToStep3()">Confirm</button>
@@ -83,41 +146,76 @@
 
   </div>
 
+  <!-- AUDIO -->
+  <audio id="bgMusic" loop>
+    <source src="assets/bg-music.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="bangSound">
+    <source src="assets/bang.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- SCRIPT -->
   <script>
-  function goToStep2() {
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-  }
+    let musicPlaying = false;
 
-  function goToStep3() {
-    const dateInput = document.getElementById('date');
-    const timeInput = document.getElementById('time');
-    const outfitInput = document.getElementById('outfit');
-    const noteInput = document.getElementById('note');
-
-    if (!dateInput || !timeInput || !outfitInput || !noteInput) {
-      alert('something is missing in the form');
-      return;
+    function toggleMusic() {
+      const music = document.getElementById("bgMusic");
+      if (!musicPlaying) {
+        music.play();
+        musicPlaying = true;
+      } else {
+        music.pause();
+        musicPlaying = false;
+      }
     }
 
-    const date = dateInput.value;
-    const time = timeInput.value;
-    const outfit = outfitInput.value;
-    const note = noteInput.value;
+    function handleNo() {
+      const nailong = document.getElementById("nailong");
+      const bang = document.getElementById("bangSound");
 
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step3').classList.remove('hidden');
+      bang.currentTime = 0;
+      bang.play();
 
-    document.getElementById('receipt').innerHTML = `
-      <strong>Valentine Date Confirmed</strong><br><br>
-      📅 Date: ${date}<br>
-      ⏰ Time: ${time}<br>
-      👗 Outfit: ${outfit}<br>
-      💌 Note: ${note || 'None'}<br><br>
-      send it to https://web.facebook.com/euro.paloy
-    `;
-  }
-</script>
+      nailong.src = "assets/nailong-sad.png";
+
+      setTimeout(() => {
+        nailong.src = "assets/nailong-happy.png";
+      }, 1500);
+    }
+
+    function handleYes() {
+      if (!musicPlaying) {
+        document.getElementById("bgMusic").play();
+        musicPlaying = true;
+      }
+      goToStep2();
+    }
+
+    function goToStep2() {
+      document.getElementById("step1").classList.add("hidden");
+      document.getElementById("step2").classList.remove("hidden");
+    }
+
+    function goToStep3() {
+      const date = document.getElementById("date").value;
+      const time = document.getElementById("time").value;
+      const outfit = document.getElementById("outfit").value;
+      const note = document.getElementById("note").value;
+
+      document.getElementById("step2").classList.add("hidden");
+      document.getElementById("step3").classList.remove("hidden");
+
+      document.getElementById("receipt").innerHTML = `
+        <strong>Valentine Date Confirmed</strong><br><br>
+        📅 Date: ${date}<br>
+        ⏰ Time: ${time}<br>
+        👗 Outfit: ${outfit}<br>
+        💌 Note: ${note || "None"}<br><br>
+        send it to https://web.facebook.com/euro.paloy
+      `;
+    }
+  </script>
 
 </body>
 </html>

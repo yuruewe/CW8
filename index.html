@@ -6,6 +6,10 @@
   <title>hehehe</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: url("assets/background.png") center / cover no-repeat;
@@ -17,7 +21,6 @@
       align-items: center;
     }
 
-    /* purple overlay */
     body::before {
       content: "";
       position: fixed;
@@ -26,12 +29,12 @@
       z-index: -1;
     }
 
-    /* Nailong on background */
+    /* Nailong background character */
     .nailong-bg {
       position: fixed;
       left: 24px;
       bottom: 24px;
-      width: 160px;
+      width: 240px; /* BIGGER */
       z-index: 1;
       transition: opacity 0.3s;
     }
@@ -40,17 +43,18 @@
       display: none;
     }
 
-    /* Music button */
+    /* Music button - centered top */
     .music-btn {
       position: fixed;
-      right: 24px;
-      top: 24px;
-      padding: 10px 14px;
-      border-radius: 20px;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 12px;
+      border-radius: 16px;
       border: none;
       cursor: pointer;
       background: rgba(255,255,255,0.9);
-      font-size: 14px;
+      font-size: 12px; /* smaller */
       z-index: 2;
     }
 
@@ -66,6 +70,7 @@
 
     h1, h2 {
       text-align: center;
+      margin-bottom: 16px;
     }
 
     button {
@@ -87,13 +92,26 @@
       background: #ccc;
     }
 
+    /* Inputs properly centered */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     input, textarea {
       width: 100%;
+      max-width: 100%;
       padding: 10px;
-      margin: 8px 0;
+      margin: 6px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
     }
 
     .receipt {
@@ -107,7 +125,7 @@
 
 <body>
 
-  <!-- Nailong (background character) -->
+  <!-- Nailong -->
   <img
     id="nailong"
     class="nailong-bg"
@@ -115,12 +133,12 @@
     alt="nailong"
   />
 
-  <!-- Music control -->
+  <!-- Music button -->
   <button class="music-btn" onclick="toggleMusic()">
-    ▶ / ⏸ Valentine - Laufey
+    ▶ / ⏸ music
   </button>
 
-  <!-- MAIN CARD -->
+  <!-- Main card -->
   <div class="card">
 
     <!-- STEP 1 -->
@@ -133,10 +151,14 @@
     <!-- STEP 2 -->
     <div id="step2" class="hidden">
       <h2>valentine date</h2>
-      <input id="date" type="date" />
-      <input id="time" type="time" />
-      <input id="outfit" type="text" placeholder="Dress code / outfit" />
-      <textarea id="note" placeholder="Anything you want to tell me 💌"></textarea>
+
+      <div class="form-group">
+        <input id="date" type="date" />
+        <input id="time" type="time" />
+        <input id="outfit" type="text" placeholder="Dress code / outfit" />
+        <textarea id="note" placeholder="Anything you want to tell me 💌"></textarea>
+      </div>
+
       <button class="yes" onclick="goToStep3()">Confirm</button>
     </div>
 
@@ -158,12 +180,12 @@
     <source src="assets/bang.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- SCRIPT -->
   <script>
     let musicPlaying = false;
 
     function toggleMusic() {
       const music = document.getElementById("bgMusic");
+
       if (!musicPlaying) {
         music.play();
         musicPlaying = true;
@@ -188,15 +210,10 @@
     }
 
     function handleYes() {
-      if (!musicPlaying) {
-        document.getElementById("bgMusic").play();
-        musicPlaying = true;
-      }
+      // ❌ NO autoplay anymore
 
-      // hide step 1 + nailong
       document.getElementById("step1").classList.add("hidden");
       document.getElementById("nailong").classList.add("hidden");
-
       document.getElementById("step2").classList.remove("hidden");
     }
 

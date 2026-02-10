@@ -9,12 +9,12 @@
     body {
       font-family: Arial, sans-serif;
       background: url("assets/background.png") center / cover no-repeat;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
       margin: 0;
       position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     /* purple overlay */
@@ -26,13 +26,42 @@
       z-index: -1;
     }
 
+    /* Nailong on background */
+    .nailong-bg {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      width: 160px;
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Music button */
+    .music-btn {
+      position: fixed;
+      right: 24px;
+      top: 24px;
+      padding: 10px 14px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.9);
+      font-size: 14px;
+      z-index: 2;
+    }
+
     .card {
       background: white;
       padding: 24px;
       border-radius: 12px;
       width: 100%;
-      max-width: 480px;
+      max-width: 420px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      z-index: 2;
     }
 
     h1, h2 {
@@ -58,11 +87,6 @@
       background: #ccc;
     }
 
-    .music-btn {
-      background: #eee;
-      font-size: 14px;
-    }
-
     input, textarea {
       width: 100%;
       padding: 10px;
@@ -72,59 +96,38 @@
       font-size: 14px;
     }
 
-    .hidden {
-      display: none;
-    }
-
     .receipt {
       background: #f7f7f7;
       padding: 16px;
       border-radius: 8px;
       font-size: 14px;
     }
-
-    /* STEP 1 layout */
-    .step1-layout {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .nailong {
-      width: 120px;
-      flex-shrink: 0;
-      transition: opacity 0.3s;
-    }
   </style>
 </head>
 
 <body>
 
+  <!-- Nailong (background character) -->
+  <img
+    id="nailong"
+    class="nailong-bg"
+    src="assets/nailong-happy.png"
+    alt="nailong"
+  />
+
+  <!-- Music control -->
+  <button class="music-btn" onclick="toggleMusic()">
+    ▶ / ⏸ music
+  </button>
+
+  <!-- MAIN CARD -->
   <div class="card">
 
     <!-- STEP 1 -->
-    <div id="step1" class="step1-layout">
-
-      <!-- Nailong -->
-      <img
-        id="nailong"
-        class="nailong"
-        src="assets/nailong-happy.png"
-        alt="nailong"
-      />
-
-      <!-- Text + buttons -->
-      <div style="flex:1;">
-        <h1>will you be my valentine</h1>
-
-        <button class="yes" onclick="handleYes()">yes</button>
-        <button class="no" onclick="handleNo()">no</button>
-
-        <button class="music-btn" onclick="toggleMusic()">
-          ▶ / ⏸ music
-        </button>
-      </div>
-
+    <div id="step1">
+      <h1>will you be my valentine</h1>
+      <button class="yes" onclick="handleYes()">yes</button>
+      <button class="no" onclick="handleNo()">no</button>
     </div>
 
     <!-- STEP 2 -->
@@ -189,11 +192,11 @@
         document.getElementById("bgMusic").play();
         musicPlaying = true;
       }
-      goToStep2();
-    }
 
-    function goToStep2() {
+      // hide step 1 + nailong
       document.getElementById("step1").classList.add("hidden");
+      document.getElementById("nailong").classList.add("hidden");
+
       document.getElementById("step2").classList.remove("hidden");
     }
 

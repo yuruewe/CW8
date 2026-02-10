@@ -13,7 +13,6 @@ body {
   background: url("assets/background.png") center / cover no-repeat;
   min-height: 100vh;
   margin: 0;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,7 +78,14 @@ button {
 }
 
 .yes { background: #ff4d6d; color: white; }
-.no  { background: #ccc; position: absolute; } /* absolute to jump anywhere */
+.no  { background: #ccc; }
+
+/* Layout for step1 buttons - vertical stack */
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /* Form */
 .form-group {
@@ -127,8 +133,10 @@ textarea { resize: none; height: 80px; }
   <!-- STEP 1 -->
   <div id="step1">
     <h1>Will you be my valentine? ♥️</h1>
-    <button class="yes" onclick="handleYes()">yes</button>
-    <button class="no" id="noBtn" onclick="handleNo()">no</button>
+    <div class="button-stack">
+      <button class="yes" onclick="handleYes()">yes</button>
+      <button class="no" id="noBtn" onclick="handleNo()">no</button>
+    </div>
   </div>
 
   <!-- STEP 2 -->
@@ -162,6 +170,7 @@ textarea { resize: none; height: 80px; }
 
 <script>
 let musicPlaying = false;
+let noBtnJumping = false;
 
 function toggleMusic() {
   const m = bgMusic;
@@ -170,39 +179,42 @@ function toggleMusic() {
   musicBtn.textContent = musicPlaying ? "⏸" : "▶";
 }
 
-// Jump anywhere on screen
 function handleNo() {
-  bangSound.currentTime = 0;
-  bangSound.play();
-
   const nailong = document.getElementById("nailong");
-  nailong.src = "assets/nailong-sad.png";
-
+  const bang = document.getElementById("bangSound");
   const btn = document.getElementById("noBtn");
 
-  // Get viewport dimensions
+  bang.currentTime = 0;
+  bang.play();
+  nailong.src = "assets/nailong-sad.png";
+
+  setTimeout(() => nailong.src = "assets/nailong-happy.png", 1200);
+
+  // Start jumping only after first click
+  if (!noBtnJumping) {
+    noBtnJumping = true;
+    btn.style.position = "absolute";
+  }
+
+  // Get viewport boundaries
   const maxX = window.innerWidth - btn.offsetWidth;
   const maxY = window.innerHeight - btn.offsetHeight;
 
+  // Move button randomly inside viewport
   btn.style.left = Math.random() * maxX + "px";
   btn.style.top  = Math.random() * maxY + "px";
-
-  setTimeout(() => nailong.src = "assets/nailong-happy.png", 1200);
 }
 
-// Proceed to Step 2
 function handleYes() {
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
 
-  // Always show dancing nailong for Step2 & Step3
   const nailong = document.getElementById("nailong");
   nailong.src = "assets/nailong-dance.png";
   nailong.style.left = "24px";
   nailong.style.bottom = "24px";
 }
 
-// Step3 receipt
 function goToStep3() {
   step2.classList.add("hidden");
   step3.classList.remove("hidden");

@@ -45,18 +45,23 @@
 
     /* Music button - centered top */
     .music-btn {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 6px 12px;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.9);
-      font-size: 12px; /* smaller */
-      z-index: 2;
-    }
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255,255,255,0.9);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
 
     .card {
       background: white;
@@ -134,9 +139,9 @@
   />
 
   <!-- Music button -->
-  <button class="music-btn" onclick="toggleMusic()">
-    ▶ / ⏸ music
-  </button>
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+  ▶
+</button>
 
   <!-- Main card -->
   <div class="card">
@@ -184,16 +189,20 @@
     let musicPlaying = false;
 
     function toggleMusic() {
-      const music = document.getElementById("bgMusic");
+  const music = document.getElementById("bgMusic");
+  const btn = document.getElementById("musicBtn");
 
-      if (!musicPlaying) {
-        music.play();
-        musicPlaying = true;
-      } else {
-        music.pause();
-        musicPlaying = false;
-      }
-    }
+  if (!musicPlaying) {
+    music.play();
+    musicPlaying = true;
+    btn.textContent = "⏸";
+  } else {
+    music.pause();
+    musicPlaying = false;
+    btn.textContent = "▶";
+  }
+}
+
 
     function handleNo() {
       const nailong = document.getElementById("nailong");

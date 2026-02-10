@@ -13,6 +13,7 @@ body {
   background: url("assets/background.png") center / cover no-repeat;
   min-height: 100vh;
   margin: 0;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +79,7 @@ button {
 }
 
 .yes { background: #ff4d6d; color: white; }
-.no  { background: #ccc; position: relative; }
+.no  { background: #ccc; position: absolute; } /* absolute to jump anywhere */
 
 /* Form */
 .form-group {
@@ -169,31 +170,39 @@ function toggleMusic() {
   musicBtn.textContent = musicPlaying ? "⏸" : "▶";
 }
 
+// Jump anywhere on screen
 function handleNo() {
   bangSound.currentTime = 0;
   bangSound.play();
 
+  const nailong = document.getElementById("nailong");
   nailong.src = "assets/nailong-sad.png";
 
   const btn = document.getElementById("noBtn");
-  const card = document.querySelector(".card");
 
-  const maxX = card.clientWidth - btn.clientWidth;
-  const maxY = card.clientHeight - btn.clientHeight;
+  // Get viewport dimensions
+  const maxX = window.innerWidth - btn.offsetWidth;
+  const maxY = window.innerHeight - btn.offsetHeight;
 
-  btn.style.position = "absolute";
   btn.style.left = Math.random() * maxX + "px";
   btn.style.top  = Math.random() * maxY + "px";
 
   setTimeout(() => nailong.src = "assets/nailong-happy.png", 1200);
 }
 
+// Proceed to Step 2
 function handleYes() {
   step1.classList.add("hidden");
   step2.classList.remove("hidden");
+
+  // Always show dancing nailong for Step2 & Step3
+  const nailong = document.getElementById("nailong");
   nailong.src = "assets/nailong-dance.png";
+  nailong.style.left = "24px";
+  nailong.style.bottom = "24px";
 }
 
+// Step3 receipt
 function goToStep3() {
   step2.classList.add("hidden");
   step3.classList.remove("hidden");
